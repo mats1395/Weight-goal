@@ -1,0 +1,31 @@
+document.getElementById('weightForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevents the default form submission behavior
+
+    // Get the input values
+    const currentWeight = parseFloat(document.getElementById('currentWeight').value);
+    const height = parseFloat(document.getElementById('height').value);
+    const targetWeight = parseFloat(document.getElementById('targetWeight').value);
+
+    // Perform validation
+    if (!currentWeight || !height || !targetWeight) {
+        alert("Please fill in all fields correctly.");
+        return;
+    }
+
+    // Calculate steps
+    const weightToLose = currentWeight - targetWeight;
+    if (weightToLose <= 0) {
+        alert("Target weight must be less than current weight.");
+        return;
+    }
+
+    const caloriesToBurn = weightToLose * 7700; // Approximate calories to burn to lose 1kg of body weight
+    const dailyDeficit = 500; // Caloric deficit per day to aim for a safe weight loss
+    const daysToGoal = Math.round(caloriesToBurn / dailyDeficit);
+
+    // Show result
+    document.getElementById('calories').innerText = `You need to burn approximately ${caloriesToBurn} calories to lose ${weightToLose} kg.`;
+    document.getElementById('steps').innerText = `With a daily calorie deficit of 500, you can reach your goal in approximately ${daysToGoal} days.`;
+
+    document.getElementById('result').classList.remove('hidden'); // Show the result section
+});
